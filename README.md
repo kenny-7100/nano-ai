@@ -24,7 +24,8 @@
 
 ## 从哪里开始
 
-- [知识笔记索引](knowledge/kb.index.v2026-11-26-233644.md)：问答与讨论中的知识沉淀，供理解、自测和复习。
+- [知识笔记索引](knowledge/README.md)：问答与讨论中的知识沉淀，供理解、自测和复习。
+- [项目内笔记技能](.agents/skills/learning-notes/SKILL.md)：本项目如何自动识别、整理和维护学习笔记。
 - [项目结构与模块边界](docs/project-structure.md)：目标目录、职责、数据流和技术选择。
 - [学习与交付路线](docs/roadmap.md)：阶段目标、知识点与验收证据。
 - [实验记录模板](docs/experiments/template.md)：记录问题、配置、结果与解释。

@@ -10,6 +10,7 @@
 nano-ai/
 ├── README.md
 ├── AGENTS.md
+├── .agents/skills/learning-notes/SKILL.md  # 项目内学习笔记技能
 ├── pyproject.toml              # Python 版本、依赖和开发工具
 ├── uv.lock                     # 确定工具链后生成并提交
 ├── .gitignore
@@ -28,8 +29,7 @@ nano-ai/
 ├── scripts/                   # 租卡准备、环境检查等运维脚本
 ├── tests/                     # 小而关键的正确性测试
 ├── notebooks/                 # 可选的探索与图示，不承载正式训练逻辑
-├── knowledge/                 # 平铺、版本化的知识笔记、索引与维护日志
-├── assets/                    # 笔记素材，需要时创建，平铺存放
+├── knowledge/                 # 按主题组织的知识笔记，README.md 为入口
 ├── docs/
 │   ├── project-structure.md
 │   ├── roadmap.md
@@ -91,7 +91,7 @@ nano-ai/
 
 ## 代码、实验报告与大文件
 
-问答和讨论中形成的可复习知识统一放在 `knowledge/`，使用点分主题与版本时间命名，由索引串联。每篇笔记包含解释、例子、误区、证据或来源以及自测问题。项目规划、决策和实验留在 `docs/`，通过链接关联知识页，避免重复维护。
+问答和讨论中形成的可复习知识统一放在 `knowledge/`，使用稳定文件名、按主题分目录，由 `knowledge/README.md` 串联；版本由 Git 保存。组织与维护规则见项目内技能 `.agents/skills/learning-notes/SKILL.md`。项目规划、决策和实验留在 `docs/`，通过链接关联知识页，避免重复维护。
 
 Git 保存代码、配置、小型合成测试样本、报告和必要图表。`data/` 与 `runs/` 只保存可重新获取或单独备份的本地产物。
 
