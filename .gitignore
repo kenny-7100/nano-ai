@@ -1,0 +1,25 @@
+# Local environments and Python outputs
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Secrets and machine-specific files
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Datasets, caches and run artifacts
+/data/
+/runs/
+/.cache/
+/wandb/
