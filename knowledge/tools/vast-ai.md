@@ -1,6 +1,6 @@
 # Vast.ai：API、CLI 与 Agent 租卡工作流
 
-更新日期：2026-11-26。核验范围：官方在线文档与官方代码仓库说明；尚未使用本项目凭据测试 API，也没有创建、修改或销毁实例。
+更新日期：2026-11-26。核验范围：官方在线文档、官方代码仓库说明，以及使用本地凭据进行的只读实例列表查询。没有创建、修改或销毁实例。
 
 ## 要解决的问题
 
@@ -21,20 +21,20 @@ Vast.ai 提供官方 REST API、CLI 和 Python SDK。官方还提供面向编码
 
 ## REST API 与认证
 
-官方当前记录的 base URL：
+调研时官方文档记录的旧 base URL 为 `https://console.vast.ai/api/v0`，但实测实例列表的 v0 路径已经弃用。当前已验证的实例列表地址：
 
 ```text
-https://console.vast.ai/api/v0
+https://console.vast.ai/api/v1/instances/
 ```
 
 认证使用 `Authorization: Bearer <API_KEY>`。在 [Keys 页面](https://cloud.vast.ai/manage-keys/) 创建密钥。API key 用于管理平台账户和资源；SSH key 用于连接机器，它们不是同一种凭据。
 
-只读鉴权检查示例，下面只是文档示例，没有在本项目执行：
+只读鉴权检查示例；本项目已通过等价的 Python HTTP 请求验证该接口：
 
 ```bash
 curl --fail-with-body --silent --show-error \
   -H "Authorization: Bearer $VAST_API_KEY" \
-  https://console.vast.ai/api/v0/instances/
+  https://console.vast.ai/api/v1/instances/
 ```
 
 密钥从本地环境或凭据存储读取，不写入仓库、实验日志或对话。官方允许创建限定权限的 key，默认 key 可能具有完整账户权限。
@@ -47,7 +47,7 @@ curl --fail-with-body --silent --show-error \
 4. 通过 SSH 执行环境检查、准备数据与训练命令，通过文件传输工具保存工件。
 5. 查询账户与实例信息，在已有授权范围内停止或销毁资源。
 
-**报价 ID 与实例 ID 不同。** REST 创建接口是 `PUT /asks/{offer_id}/`；创建结果中的 `new_contract` 是后续操作需要的实例 ID。不能把它们混用。
+**报价 ID 与实例 ID 不同。** 调研文档中的创建接口为 `PUT /api/v0/asks/{offer_id}/`，创建结果中的 `new_contract` 是后续操作需要的实例 ID。该创建接口没有实测，接入时需确认当前版本；不能根据实例列表的迁移推断所有接口均可直接替换为 v1。
 
 平台 API 主要管理资源；训练脚本、训练进度与 checkpoint 的管理仍需 SSH 或我们自己的运行逻辑。实例显示 running 也不代表训练环境和任务已经通过检查。
 
@@ -62,7 +62,17 @@ curl --fail-with-body --silent --show-error \
 
 ## 推荐的项目接入顺序
 
-先配置本地凭据与只读验证，运行实例列表和报价查询；接着在明确预算与清理方式后完成一次小规模实例生命周期验证；最后再按实际需要加入项目脚本和技能。暂不安装官方插件、不引入完整资源编排系统。
+本地凭据与实例列表只读验证已完成；下一步可验证报价查询。接着在明确预算与清理方式后完成一次小规模实例生命周期验证；最后再按实际需要加入项目脚本和技能。暂不安装官方插件、不引入完整资源编排系统。
+
+## 本项目只读连接实测
+
+- 从本地 `.env` 读取 `VAST_API_KEY`，没有输出密钥或完整账户响应。
+- `GET /api/v0/instances/` 返回 HTTP 410，错误为 `deprecated_endpoint`，明确要求改用 `/api/v1/instances/`。
+- `GET /api/v1/instances/` 返回 HTTP 200，实例列表为空，证明本次密钥鉴权和实例列表读取成功。
+- 已确认 `.env` 被 Git 忽略；只提交不含凭据的记录。
+- 该结果不证明创建、停止、销毁或其他接口的权限，也没有验证 CLI、SDK 和 SSH 连接。
+
+经验：官方示例与线上版本可能不同。遇到 410 应先看经过脱敏的错误提示，不能直接断定密钥无效，也不应盲目重试或猜测所有接口版本。
 
 ## 自测
 
