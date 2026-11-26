@@ -11,6 +11,10 @@
 
 - [从资深软件开发到 AI 工程的实践路线](learning/ai-engineering-path.md)：把学习连接到可验证的作品证据。
 
+## 工具与云端实践
+
+- [Vast.ai：API、CLI 与 Agent 租卡工作流](tools/vast-ai.md)：官方接口、认证、自动化边界与接入建议。
+
 ## 维护方式
 
 由 [项目内 learning-notes 技能](../.agents/skills/learning-notes/SKILL.md) 维护。使用稳定文件名、按主题组织；同一知识点持续完善，历史由 Git 保存。笔记注明建议、推断与实测结论的区别，不把整理日期当作事实核验日期。
